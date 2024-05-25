@@ -42,6 +42,7 @@ export default function FormModal({ open, handleClose, mode, selectedCar, modalK
 	};
 	const handleCreate = async (newForm) => {
 		try {
+			console.log(newForm)
 			const res = await apiService.post('/cars', { ...newForm });
 			refreshData();
 			console.log(res);
@@ -49,15 +50,15 @@ export default function FormModal({ open, handleClose, mode, selectedCar, modalK
 			console.log(err.message);
 		}
 	};
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		const validate = schema.validate(form);
 		if (validate.error) {
 			const newErrors = {};
 			validate.error.details.forEach((item) => (newErrors[item.path[0]] = item.message));
 			setErrors(newErrors);
 		} else {
-			if (mode === 'create') handleCreate(validate.value);
-			else handleEdit(validate.value);
+			if (mode === 'create') await handleCreate(validate.value);
+			else await handleEdit(validate.value);
 			// handleClose();
 		}
 	};
@@ -67,7 +68,7 @@ export default function FormModal({ open, handleClose, mode, selectedCar, modalK
 			setForm(selectedCar);
 		} else setForm(initial_form);
 	}, [selectedCar]);
-	
+
 	return (
 		<LocalizationProvider dateAdapter={AdapterDateFns} key={modalKey}>
 			<Dialog

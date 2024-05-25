@@ -11,6 +11,8 @@ import AddIcon from "@mui/icons-material/Add";
 const HomePage = () => {
   const [cars, setCars] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  console.log(cars)
+  console.log(totalPages)
   const [page, setPage] = useState(1);
   const [openForm, setOpenForm] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -88,9 +90,9 @@ const HomePage = () => {
   const getData =
     useCallback(
       async () => {
-    const res = await apiService.get(`/cars?page=${page}`);
-    setCars(res.data.cars);
-    setTotalPages(res.data.total);
+        const res = await apiService.get(`/cars?page=${page}`);
+        setCars(res.data.cars);
+        setTotalPages(res.data.total);
       }
       , [page]);
 
@@ -111,6 +113,7 @@ const HomePage = () => {
       <FormModal
         open={openForm}
         refreshData={() => {
+          console.log("refreshData")
           setOpenForm(false);
           setSelectedCar(null);
           getData();
