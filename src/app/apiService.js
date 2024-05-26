@@ -1,7 +1,8 @@
 import axios from 'axios';
+console.log(process.env.REACT_APP_BACKEND_API)
 
 const apiService = axios.create({
-	baseURL: process.env.REACT_APP_BACKEND_API = "http://localhost:8000",
+	baseURL: process.env.REACT_APP_BACKEND_API,
 });
 
 apiService.interceptors.request.use(
